@@ -1,0 +1,4 @@
+Model,Accuracy,ConfusionMatrix
+Decision Tree,0.543,"[[134, 144], [171, 241]]"
+Logistic Regression,0.642,"[[110, 168], [79, 333]]"
+Random Forest,0.609,"[[118, 160], [110, 302]]"
