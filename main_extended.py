@@ -3,15 +3,14 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix
-from util.feature_extraction_baseline import extract_features_from_folder
-import matplotlib.pyplot as plt
-import seaborn as sns
+from util.feature_extraction_extended import extract_features_from_folder_nohair
 
-# === Feature Extraction (NO hair removal) ===
 metadata_path = "data/metadata.csv"
 images_path = "data/images"
-output_csv = "data/features_with_labels.csv"
-#extract_features_from_folder(metadata_path, images_path, output_csv)  # Uncomment if needed
+output_csv = "data/features_with_labels_nohair.csv"
+
+# Uncomment the line below if you want to re-run feature extraction (slow)
+extract_features_from_folder_nohair(metadata_path, images_path, output_csv)
 
 # === Load Features ===
 df = pd.read_csv(output_csv)
@@ -31,7 +30,7 @@ y_pred = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 conf_matrix = confusion_matrix(y_test, y_pred)
 
-print("📊 Logistic Regression (Baseline - No Hair Removal)")
+print("📊 Logistic Regression (Baseline - With Hair Removal)")
 print(f"✅ Accuracy: {accuracy:.2%}")
 print("🧾 Confusion Matrix:")
 print(conf_matrix)
@@ -44,18 +43,4 @@ pd.DataFrame({
     "FP": [conf_matrix[0][1]],
     "FN": [conf_matrix[1][0]],
     "TP": [conf_matrix[1][1]]
-}).to_csv("result/baseline_result.csv", index=False)
-
-# === Save Confusion Matrix Plot ===
-plt.figure(figsize=(6, 5))
-sns.heatmap(conf_matrix, annot=True, fmt='d', cmap='Blues', cbar=True,
-            xticklabels=["No", "Yes"], yticklabels=["No", "Yes"])
-
-plt.title("Confusion Matrix: Logistic Regression")
-plt.xlabel("Predicted")
-plt.ylabel("Actual")
-plt.tight_layout()
-
-os.makedirs("result/confusion_matrices", exist_ok=True)
-plt.savefig("result/confusion_matrices/baseline_confusion.png")
-plt.close()
+}).to_csv("result/extended_result.csv", index=False)

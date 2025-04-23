@@ -5,11 +5,7 @@ __pycache__/
 
 # Ignore raw data and large outputs
 data/images/
-result/*.csv
-result/*.png
-result/features_with_labels.csv
-result/model_comparison.csv
-result/confusion_matrices/
+
 
 
 

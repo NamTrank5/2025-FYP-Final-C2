@@ -1,4 +1,3 @@
-# === main.py ===
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -6,20 +5,18 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix
-from util.feature_extraction import extract_features_from_folder
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 # === Optional Feature Extraction ===
 metadata_path = "data/metadata.csv"
 images_path = "data/images"
-output_csv = "data/features_with_labels.csv"
+output_csv = "data/features_with_labels_nohair.csv"
 
 # Uncomment the line below if you want to re-run feature extraction (slow)
-# extract_features_from_folder(metadata_path, images_path, output_csv)
+# extract_features_from_folder_nohair(metadata_path, images_path, output_csv)
 
-# === Load extracted features ===
-df = pd.read_csv('data/features_with_labels.csv')
+df = pd.read_csv('data/features_with_labels_nohair.csv')
 feature_cols = [col for col in df.columns if col.startswith("feat_")]
 X = df[feature_cols]
 y = df["label"]
@@ -73,4 +70,3 @@ for name, model in models.items():
 results_df = pd.DataFrame(results)
 results_df.to_csv("result/model_comparison.csv", index=False)
 print("\n✅ Model results saved to: result/model_comparison.csv")
-

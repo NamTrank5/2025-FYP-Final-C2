@@ -1,4 +1,4 @@
-def extract_features_from_folder(metadata_csv, image_folder, output_csv):
+def extract_features_from_folder_nohair(metadata_csv, image_folder, output_csv):
     import os
     import cv2
     import numpy as np
@@ -24,7 +24,9 @@ def extract_features_from_folder(metadata_csv, image_folder, output_csv):
             img_rgb, img_gray = readImageFile(img_path)
             _, _, img_clean = removeHair(img_rgb, img_gray)
 
-            _, thresh = cv2.threshold(img_gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+            img_clean_gray = cv2.cvtColor(img_clean, cv2.COLOR_BGR2GRAY)
+            _, thresh = cv2.threshold(img_clean_gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+
             contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             if not contours:
                 continue
@@ -40,7 +42,7 @@ def extract_features_from_folder(metadata_csv, image_folder, output_csv):
 
             mask = np.zeros(img_gray.shape, np.uint8)
             cv2.drawContours(mask, [c], -1, 255, -1)
-            mean_val = cv2.mean(img_rgb, mask=mask)
+            mean_val = cv2.mean(img_clean, mask=mask)
 
             features.append({
                 "img_id": img_id,
