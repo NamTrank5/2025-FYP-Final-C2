@@ -5,7 +5,8 @@ __pycache__/
 
 # Ignore raw data and large outputs
 data/images/
-
+data/images_mandatory_assignment
+data/lesion_masks
 
 
 
