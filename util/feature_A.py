@@ -20,12 +20,27 @@ def crop(mask):
     return mask[y_lims[0]:y_lims[1], x_lims[0]:x_lims[1]]
 
 def get_asymmetry(mask):
-    # mask = color.rgb2gray(mask)
     scores = []
-    for _ in range(6):
-        segment = crop(mask)
-        (np.sum(segment))
-        scores.append(np.sum(np.logical_xor(segment, np.flip(segment))) / (np.sum(segment)))
-        mask = rotate(mask, 30)
-    return sum(scores) / len(scores)
 
+    for _ in range(6):
+        # Rotate the mask and binarize it again
+        rotated = rotate(mask, 30, preserve_range=True)
+        rotated = (rotated > 0.5).astype(np.uint8)
+
+        segment = crop(rotated)
+        segment_sum = np.sum(segment)
+
+        if segment_sum == 0:
+            scores.append(0)
+        else:
+            # Flip horizontally for asymmetry comparison
+            flipped = np.fliplr(segment)
+            diff = np.logical_xor(segment, flipped)
+            score = np.sum(diff) / segment_sum
+            scores.append(score)
+
+        # Prepare for next rotation
+        mask = rotated
+
+    raw_score = np.mean(scores)
+    return np.clip(raw_score, 0, 1)

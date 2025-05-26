@@ -74,13 +74,13 @@ df_feat.dropna(inplace=True)
 after = len(df_feat)
 print(f"[INFO] Dropped {before - after} rows with missing values.")
 
-# X = df_feat[["A", "B", "C", "H"]]
-# y = df_feat["label"]
-# X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X = df_feat[["A", "B", "C", "H"]]
+y = df_feat["label"]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# # === Train and evaluate ===
-# clf, y_pred, y_prob, acc, f1, cm = train_and_evaluate(X_train, y_train, X_test, y_test)
-# save_results(X_test, df_feat.loc[X_test.index, "filename"].values, y_test, y_pred, y_prob, result_file)
-# save_metrics_and_plot(cm, acc, f1, eval_folder, tag='extended')
+# === Train and evaluate ===
+clf, y_pred, y_prob, acc, f1, cm = train_and_evaluate(X_train, y_train, X_test, y_test)
+save_results(X_test, df_feat.loc[X_test.index, "filename"].values, y_test, y_pred, y_prob, result_file)
+save_metrics_and_plot(cm, acc, f1, eval_folder, tag='extended')
 df_feat.to_csv("result/features_extended.csv", index=False)
 print("\n✅ Done. Extended model results saved in 'result/' folder.")

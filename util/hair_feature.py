@@ -8,3 +8,6 @@ def detect_hair(img_rgb):
     hair_pixels = np.sum(thresh == 255)
     total_pixels = thresh.shape[0] * thresh.shape[1]
     return hair_pixels / total_pixels
+
+
+
