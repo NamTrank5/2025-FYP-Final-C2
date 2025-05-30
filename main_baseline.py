@@ -20,7 +20,7 @@ from util.classifier import train_and_evaluate, save_results, save_metrics_and_p
 # === Paths ===
 image_dir = "data/images"
 mask_dir = "data/lesion_masks"
-label_file = "data/metadata.csv"
+label_file = "metadata.csv"
 result_file = "result/results_baseline.csv"
 eval_folder = "result/eval"
 

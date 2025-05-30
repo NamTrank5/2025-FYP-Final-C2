@@ -18,7 +18,7 @@ from util.hair_feature import detect_hair
 # === Paths ===
 image_dir = "data/images"
 mask_dir = "data/lesion_masks"
-label_file = "data/metadata.csv"
+label_file = "metadata.csv"
 result_file = "result/results_extended.csv"
 eval_folder = "result/eval_extended"
 
